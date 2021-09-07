@@ -37,8 +37,28 @@ class quickUse(bpy.types.Operator):
         else:
             return False
 
-    def quickRemoveMaterials():
-        ...
+class TEST_OT_print(bpy.types.Operator):
+    bl_idname = "pearl.test"
+    bl_label ="test"
 
-    def quickTranslate():
-        ...
+    def execute(self,context):
+        print('quick pie')
+        return {'FINISHED'}
+# 饼菜单
+class TEST_MT_quickpie(bpy.types.Menu):
+    bl_idname = "TEST_MT_quickpie"
+    bl_label ="quick use"
+
+    def draw(self,context):
+        layout = self.layout
+        pie = layout.menu_pie()
+        pie.operator("pearl.test",text="hello",icon="CUBE")
+        pie.operator("pearl.quick_translate",text="translate",icon="CUBE")
+
+
+classes = [
+    quickUse,
+    TEST_OT_print,
+    TEST_MT_quickpie,
+
+]

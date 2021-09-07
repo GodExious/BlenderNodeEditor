@@ -26,3 +26,25 @@ ID属性
 layout.column().prop(context.scene,'["IDFloat"]',text="bool")
 
 layout布局
+    layout() 基本布局
+    row() column()
+    split() 分割
+    box()
+    参数
+    alignment 对齐方式
+    label 设置标签 
+        emboss button样式
+        enabled 禁用或启用
+        scale_x/y 大型
+        alert 警告
+        alignment
+        use_property_decorate
+        use_property_split
+
+Menu
+    默认为下拉栏菜单
+    operator 不会调用invoke初始化
+    layout.operator_menu_enum
+    layout.operator_enum
+    layout.menu
+    

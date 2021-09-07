@@ -12,31 +12,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import bpy
-from bpy.types import Operator
+from bpy.types import Addon, Operator
 # from .quick_use import *
 # from .quick_translate import *
 from . import quick_use
 from . import quick_translate
-from . import test
 
 
-
-# class TEST_OT_(bpy.types.Operator):
-#     bl_idname = 'pearl.test'
-#     bl_label = 'test'
-#     bl_options = {'REGISTER'}
-
-#     # property
-#     value = bpy.props.FloatProperty(name='value',default=1.0)
-
-#     @classmethod
-#     def poll(params,context):
-#         return True
-
-#     def execute(self, context):
-#         return {'FINISHED'}
-
-    
 
 bl_info = {
     "name" : "PearlGeneric",
@@ -51,21 +33,41 @@ bl_info = {
     "tracker_url" : "https://github.com/SoTosorrow/BlenderNodeEditor",
 }
 
+# 快捷键
+addon_keymaps = []
+
+
 # 插件开启时调用
 def register():
     print("Pearl On")
-    bpy.utils.register_class(quick_use.quickUse)
     bpy.utils.register_class(quick_translate.quickTranslate)
-    for c in test.classes:
+    for c in quick_use.classes:
         bpy.utils.register_class(c)
+
+    # 注册快捷键
+    wm = bpy.context.window_manager
+    if wm.keyconfigs.addon:
+        # name 快捷键分区
+        km = wm.keyconfigs.addon.keymaps.new(name="3D View",space_type='VIEW_3D')
+        kmi = km.keymap_items.new('wm.call_menu_pie',
+            'E','PRESS',shift=False,alt=False,ctrl=False)
+        kmi.properties.name = quick_use.TEST_MT_quickpie.bl_idname
+        addon_keymaps.append((km,kmi))
 
 # 插件关闭时调用
 def unregister():
     print("Pearl Off")
-    bpy.utils.unregister_class(quick_use.quickUse)
     bpy.utils.unregister_class(quick_translate.quickTranslate)
-    for c in test.classes:
+    for c in quick_use.classes:
         bpy.utils.unregister_class(c)
+
+    # 卸载快捷键
+    wm = bpy.context.window_manager
+    if wm.keyconfigs.addon:
+        for km,kmi in addon_keymaps:
+            km.keymap_items.remove(kmi)
+    addon_keymaps.clear()
+
 
 '''
 import bpy

@@ -190,7 +190,37 @@ class TEST_PT_filebrower_panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         layout.label(text="panel test",icon="BLENDER")
-        
+
+
+class TEST_OT_print(bpy.types.Operator):
+    bl_idname = "pearl.print"
+    bl_label ="test"
+
+    def execute(self,context):
+        print('pie1')
+        return {'FINISHED'}
+# 饼菜单
+class TEST_MT_piemenu(bpy.types.Menu):
+    bl_idname = "TEST_MT_piemenu"
+    bl_label ="pie"
+
+    def draw(self,context):
+        layout = self.layout
+        pie = layout.menu_pie()
+        pie.operator("pearl.print",text="print",icon="CUBE")
+        pie.operator("pearl.quick_translate",text="translate",icon="CUBE")
+# 普通菜单
+class TEST_MT_simplemenu(bpy.types.Menu):
+    bl_idname = "TEST_MT_simplemenu"
+    bl_label ="pie"
+
+    def draw(self,context):
+        layout = self.layout
+        layout.operator("pearl.quick_translate",text="translate",icon="CUBE")
+        layout.separator()
+        # 子菜单
+        layout.menu("VIEW3D_MT_mesh_add")
+    # use - bpy.ops.wm.call_menu(name="TEST_MT_simplemenu")
 
 classes = [
     MoveOperator,
@@ -198,6 +228,21 @@ classes = [
     TEST_PT_view3d_panel,
     TEST_PT_view3d_panel2,
     TEST_PT_properties_panel,
-    TEST_PT_filebrower_panel
+    TEST_PT_filebrower_panel,
+    TEST_OT_print,
+    TEST_MT_piemenu,
+    TEST_MT_simplemenu
 ]
 
+'''
+菜单扩展至header
+def draw_extendMenu(self,context):
+    layout =self.layout
+    layout.operator(...)
+    layout.operator_menu_enum('pearl.enum','color',text='color')
+    layout.menu('MY_MT_MENU')
+
+
+bpy.types.VIEW3D_MT_add.append(draw_extendMenu)
+bpy.types.VIEW3D_MT_add.remove(draw_extendMenu)
+'''

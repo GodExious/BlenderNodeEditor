@@ -1,5 +1,6 @@
 import bpy
 
+
 class MoveOperator(bpy.types.Operator):
     bl_idname = "pearl.modaltest"
     bl_label = "modaltest"
@@ -94,3 +95,109 @@ class DialogTest(bpy.types.Operator):
         layout = self.layout
         row = layout.row()
         row.prop(self,"testStr",icon="BLENDER",text="First Value")
+
+
+class TEST_OT_op(bpy.types.Operator):
+    bl_idname = "pearl._panel"
+    bl_label = "panel test"
+    bl_description = "Description that shows in blender tooltips"
+    bl_options = {'REGISTER'}
+
+    testStr : bpy.props.StringProperty(name="1",default="111")
+
+    def execute(self, context):
+        context.scene['IDFloat'] = 1.0
+        return {"FINISHED"}
+
+    def invoke(self,context,event):
+        return context.window_manager.invoke_props_dialog(self)
+
+# 定义面板
+class uiPos:
+    bl_category = "Pearl"
+    bl_space_type = 'VIEW_3D'  # ui_type
+    bl_region_type = "UI" 
+    bl_context = "objectmode"
+
+class TEST_PT_view3d_panel(uiPos,bpy.types.Panel):
+    bl_idname = "TEST_PT_view3d_panel"
+    bl_label = "test"
+    # 默认关闭面板
+    bl_options = {"DEFAULT_CLOSED"}
+
+    # 面板头部布局
+    def draw_header(self, context):
+        layout = self.layout
+        layout.label(text="Head",icon="VIEW_PAN")
+
+    # 面板布局
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="panel test",icon="BLENDER")
+        
+        # 定义button 最后还可以初始化
+        layout.row().operator("pearl._panel",text="召唤测试面板",icon="CUBE").testStr="init"
+        layout.row().operator("pearl.quick_translate",text="一键翻译",icon="CUBE")
+        layout.row().operator("pearl.quick_use",text="批量删除材质",icon="CUBE")
+class TEST_PT_view3d_panel2(uiPos,bpy.types.Panel):
+    bl_label = "test2"
+    # 设置父级
+    bl_parent_id = "TEST_PT_view3d_panel"
+    # 默认关闭面板
+    bl_options = {"DEFAULT_CLOSED"}
+
+    # 面板头部布局
+    def draw_header(self, context):
+        layout = self.layout
+        layout.label(text="Head",icon="VIEW_PAN")
+
+    # 面板布局
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="panel test",icon="BLENDER")
+        
+        # 定义button 最后还可以初始化
+        layout.row().operator("pearl._panel",text="召唤测试面板",icon="CUBE").testStr="init"
+        layout.row().operator("pearl.quick_translate",text="一键翻译",icon="CUBE")
+        layout.row().operator("pearl.quick_use",text="批量删除材质",icon="CUBE")
+        # id属性
+        layout.row().prop(context.scene,'["IDFloat"]',text="test")
+
+
+
+# 定义嵌入属性的面板
+class TEST_PT_properties_panel(bpy.types.Panel):
+    bl_label = "test"
+    bl_options = {"HIDE_HEADER"}
+
+    bl_space_type = 'PROPERTIES'  # ui_type
+    bl_region_type = "WINDOW" 
+    # 属性面板中的TEXTURE区块
+    bl_context = "texture"
+
+    # 面板布局
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="panel test",icon="BLENDER")
+
+# 定义文件浏览器的面板
+class TEST_PT_filebrower_panel(bpy.types.Panel):
+    bl_label = "test"
+    bl_space_type = 'FILE_BROWSER'  # ui_type
+    bl_region_type = "TOOLS" 
+
+    # 面板布局
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="panel test",icon="BLENDER")
+        
+
+classes = [
+    MoveOperator,
+    TEST_OT_op,
+    TEST_PT_view3d_panel,
+    TEST_PT_view3d_panel2,
+    TEST_PT_properties_panel,
+    TEST_PT_filebrower_panel
+]
+

@@ -56,16 +56,16 @@ def register():
     print("Pearl On")
     bpy.utils.register_class(quick_use.quickUse)
     bpy.utils.register_class(quick_translate.quickTranslate)
-    bpy.utils.register_class(test.MoveOperator)
-    bpy.utils.register_class(test.DialogTest)
+    for c in test.classes:
+        bpy.utils.register_class(c)
 
 # 插件关闭时调用
 def unregister():
     print("Pearl Off")
     bpy.utils.unregister_class(quick_use.quickUse)
     bpy.utils.unregister_class(quick_translate.quickTranslate)
-    bpy.utils.unregister_class(test.MoveOperator)
-    bpy.utils.unregister_class(test.DialogTest)
+    for c in test.classes:
+        bpy.utils.unregister_class(c)
 
 '''
 import bpy

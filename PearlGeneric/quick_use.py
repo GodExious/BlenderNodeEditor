@@ -12,16 +12,20 @@ class quickUse(bpy.types.Operator):
     def execute(self, context):
         print("execute")
         self.report({"INFO"},"pop materials batch")
+
+        # 批量删除材质
         for obj in bpy.context.selected_objects:
             if obj.type=="MESH":
                 obj.data.materials.pop()
+        
         return {'FINISHED'}
 
     def invoke(self, context, event):
-        if event.type == "LEFTMOUSE":
-            self.report({"INFO"},"left mouse press")
+        # if event.type == "LEFTMOUSE":
+        #     self.report({"INFO"},"left mouse press")
         if self.poll(context):
             print("3d_view execute")
+            
         # return {'FINISHED'}
         return self.execute(context)  
 

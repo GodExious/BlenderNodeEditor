@@ -13,7 +13,10 @@
 
 import bpy
 from bpy.types import Operator
-from .quick_use import *
+# from .quick_use import *
+# from .quick_translate import *
+from . import quick_use
+from . import quick_translate
 
 
 
@@ -50,12 +53,14 @@ bl_info = {
 # 插件开启时调用
 def register():
     print("Pearl On")
-    bpy.utils.register_class(quickUse)
+    bpy.utils.register_class(quick_use.quickUse)
+    bpy.utils.register_class(quick_translate.quickTranslate)
 
 # 插件关闭时调用
 def unregister():
     print("Pearl Off")
-    bpy.utils.unregister_class(quickUse)
+    bpy.utils.unregister_class(quick_use.quickUse)
+    bpy.utils.unregister_class(quick_translate.quickTranslate)
 
 '''
 import bpy

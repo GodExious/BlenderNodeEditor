@@ -2,6 +2,9 @@ read:
 https://docs.blender.org/api/current/index.html
 https://archive.blender.org/wiki/index.php/
 
+learn from: 
+https://www.bilibili.com/video/BV1hh411d7xk?spm_id_from=333.999.0.0
+https://www.bilibili.com/video/BV1mD4y127CA?p=6
 
 TODO：
 一键删除材质
@@ -121,13 +124,35 @@ bpy.props属性管理
             update = myUpdate
         )
 
-    operator
-    invoke 初始化
+    operator 流程
+    invoke 初始化 
+        self.execute(context) 调用execute
+        'RUNNING_MODAL' 调用modal,配合context.window_manager.modal_handler_add(self)
     execute 执行
     modal 一直运行
     poll 检测状态
-    都必须返回固定值：取消'CANCELLED' 确定'FINISHED' 运行modal'RUNNING_MODAL' 'PASS_THROUGH' 'INTERFACE'
+    都必须返回固定值：
+        取消'CANCELLED'  会结束
+        确定'FINISHED'  会结束
+        运行modal'RUNNING_MODAL' 
+        'PASS_THROUGH' 
+        'INTERFACE'
 
+
+
+context 是只读的，所以可以通过复制拷贝重写、修改
+    # context copy
+    override = bpy.context.copy()
+    # 要修改 list(bpy.context.scene.objects)
+    override['selected_objects'] = list(bpy.context.scene.objects)
+    # delete 操作删除选择了的物体，上一步将所有物体都选择了
+    bpy.ops.object.delete(override)
+execution context
+    EXEC_DEFAULT 调用execution
+    INVOKE_DEFAULT 调用invoke
+    ...
+    ex: bpy.ops.pearl.quick_use('EXEC_DEFAULT')
+        执行 pearl.quick_use 的execute方法
 
 
 
@@ -136,3 +161,4 @@ operator : _OT_
 menu : _MT_
 header : _HT_
 panel : _PT_
+

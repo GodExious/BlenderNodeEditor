@@ -14,7 +14,7 @@ class quickUse(bpy.types.Operator):
         self.report({"INFO"},"pop materials batch")
 
         # 批量删除材质
-        for obj in bpy.context.selected_objects:
+        for obj in context.selected_objects:
             if obj.type=="MESH":
                 obj.data.materials.pop()
         
@@ -25,12 +25,12 @@ class quickUse(bpy.types.Operator):
         #     self.report({"INFO"},"left mouse press")
         if self.poll(context):
             print("3d_view execute")
-            
+
         # return {'FINISHED'}
         return self.execute(context)  
 
     @classmethod
-    def poll(params,context):
+    def poll(cls,context):
         # 检测当前视图为3d视图时才可以调用
         if context.area.ui_type == 'VIEW_3D':
             return True

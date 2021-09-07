@@ -7,11 +7,11 @@ class quickTranslate(bpy.types.Operator):
     bl_label = 'translate CN/US'
 
     def execute(self, context):
-        language = bpy.context.preferences.view.language
+        language = context.preferences.view.language
         if language == 'zh_CN':
-            bpy.context.preferences.view.language = 'en_US'
+            context.preferences.view.language = 'en_US'
         else:
-            bpy.context.preferences.view.language = 'zh_CN'
+            context.preferences.view.language = 'zh_CN'
         self.report({"INFO"},"translate")
         
         return {'FINISHED'}

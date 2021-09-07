@@ -1,7 +1,7 @@
-# BlenderNodeEditor
-NodeEditor addon for blender
+# QuickUse
+QuickUse addon for blender
 
-
+NodeEditor addon for blender(todo)
 
 # Need  
 fake-bpy-module  

@@ -1,6 +1,6 @@
 import bpy
 
-class QUICK_OT_MaterialClear(bpy.types.Operator):
+class QUICK_OT_material_clear(bpy.types.Operator):
     # 需要两段字符串以点连接，不能有大写字母
     # 可以通过idname 在f3调用
     bl_idname = 'pearl.quick_material_clear'
@@ -30,7 +30,7 @@ class QUICK_OT_MaterialClear(bpy.types.Operator):
         else:
             return False
 
-class QUICK_OT_MaterialAppoint(bpy.types.Operator):
+class QUICK_OT_material_appoint(bpy.types.Operator):
     bl_idname = 'pearl.quick_material_appoint'
     bl_label = 'appoint materials batch'
 
@@ -49,7 +49,7 @@ class QUICK_OT_MaterialAppoint(bpy.types.Operator):
 
 
 
-class QUICK_OT_Translate(bpy.types.Operator):
+class QUICK_OT_translate(bpy.types.Operator):
     bl_idname = 'pearl.quick_translate'
     bl_label = 'translate CN/US'
 
@@ -63,7 +63,7 @@ class QUICK_OT_Translate(bpy.types.Operator):
         return {'FINISHED'}
 
 
-class QUICK_OT_Clean(bpy.types.Operator):
+class QUICK_OT_clean(bpy.types.Operator):
     bl_idname = "pearl.unuse_clean"
     bl_label ="unuse clean"
 
@@ -80,32 +80,3 @@ class QUICK_OT_print(bpy.types.Operator):
         print('quick pie')
         return {'FINISHED'}
 
-
-# 饼菜单
-class QUICK_MT_QuickPie(bpy.types.Menu):
-    bl_idname = "QUICK_MT_QuickPie"
-    bl_label ="Pearl-QuickUse"
-
-    def draw(self,context):
-        layout = self.layout
-        pie = layout.menu_pie()
-        # left
-        pie.operator("pearl.quick_material_clear",text="Material Clear",icon="CUBE")
-        # right
-        pie.operator("pearl.print",text="Hello",icon="CUBE")
-        # down
-        pie.operator("pearl.quick_translate",text="Translate",icon="CUBE")
-        # up
-        pie.operator("pearl.quick_material_appoint",text="Material Appoint",icon="CUBE")
-        pie.operator("pearl.unuse_clean",text="UnUse Clean",icon="CUBE")
-
-
-classes = [
-    QUICK_OT_MaterialClear,
-    QUICK_OT_MaterialAppoint,
-    QUICK_OT_Translate,
-    QUICK_OT_print,
-    QUICK_OT_Clean,
-
-    QUICK_MT_QuickPie,
-]

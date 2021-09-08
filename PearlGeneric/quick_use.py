@@ -41,6 +41,7 @@ class QUICK_OT_MaterialAppoint(bpy.types.Operator):
         # 批量赋予材质
         for obj in context.selected_objects:
             if obj.type=="MESH":
+                # 物体激活的材质赋值为最新的材质，如果物体没有材质，则新增
                 obj.active_material = bpy.data.materials[-1]
 
         self.report({"INFO"},"appoint materials batch")

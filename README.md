@@ -6,7 +6,9 @@ NodeEditor addon for blender(todo)
 
 # show
 
-![1](.\doc\1.png)
+![1](./doc/1.png)
+
+
 
 ## Develop Need
 

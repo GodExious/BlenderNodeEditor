@@ -12,13 +12,12 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import bpy
-from bpy.types import Addon, Operator
-# from .quick_use import *
-# from .quick_translate import *
 from . import quick_use
-from . import quick_translate
 
+'''
+TODO 右键菜单
 
+'''
 
 bl_info = {
     "name" : "PearlGeneric",
@@ -39,8 +38,7 @@ addon_keymaps = []
 
 # 插件开启时调用
 def register():
-    print("Pearl On")
-    bpy.utils.register_class(quick_translate.quickTranslate)
+    print("Pearl Generic On")
     for c in quick_use.classes:
         bpy.utils.register_class(c)
 
@@ -51,13 +49,12 @@ def register():
         km = wm.keyconfigs.addon.keymaps.new(name="3D View",space_type='VIEW_3D')
         kmi = km.keymap_items.new('wm.call_menu_pie',
             'E','PRESS',shift=False,alt=False,ctrl=False)
-        kmi.properties.name = quick_use.TEST_MT_quickpie.bl_idname
+        kmi.properties.name = quick_use.QUICK_MT_QuickPie.bl_idname
         addon_keymaps.append((km,kmi))
 
 # 插件关闭时调用
 def unregister():
-    print("Pearl Off")
-    bpy.utils.unregister_class(quick_translate.quickTranslate)
+    print("Pearl Generic Off")
     for c in quick_use.classes:
         bpy.utils.unregister_class(c)
 
@@ -68,14 +65,3 @@ def unregister():
             km.keymap_items.remove(kmi)
     addon_keymaps.clear()
 
-
-'''
-import bpy
-# active_object
-# 一键去除材质
-C.scene.objs[].select_get() true or false
-for obj in bpy.context.selected_objects:
-    if obj.type=="MESH":
-        obj.data.materials.pop()
-
-'''

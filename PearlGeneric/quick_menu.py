@@ -20,8 +20,10 @@ class QUICK_MT_QuickPie(bpy.types.Menu):
         # up
         pie.operator(quick_use.QUICK_OT_material_appoint.bl_idname,text="Material Appoint",icon="BLENDER")
         pie.operator(quick_use.QUICK_OT_clean.bl_idname,text="UnUse Clean",icon="BLENDER")
+        # test
         pie.operator(quick_mesh.QUICK_OT_mesh_add.bl_idname,text="Test Mesh",icon="CUBE")
         pie.operator(quick_mesh.QUICK_OT_mesh_move.bl_idname,text="Test BMesh",icon="CUBE")
+        # pie.operator(quick_mesh.QUICK_OT_cv_test.bl_idname,text="Test BMesh",icon="CUBE")
 
 
 classes = [
@@ -33,6 +35,7 @@ classes = [
 
     quick_mesh.QUICK_OT_mesh_add,
     quick_mesh.QUICK_OT_mesh_move,
+    # quick_mesh.QUICK_OT_cv_test,
 
     QUICK_MT_QuickPie,
 ]

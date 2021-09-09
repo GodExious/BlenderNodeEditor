@@ -1,6 +1,16 @@
 import bpy
+import bmesh
 
+'''
+bmesh vs mesh
 
+bmesh在编辑模式才有用
+bm = bmesh.from_edit_mesh(obj.data)
+bm.edges/faces/verts
+        如何获得选择的面？
+        bm.faces.active = None bmesh active的面
+        bm.verts[0].normal
+'''
 
 class QUICK_OT_mesh_add(bpy.types.Operator):
     bl_idname = 'pearl.quick_mesh_add'
@@ -51,4 +61,43 @@ class QUICK_OT_mesh_add(bpy.types.Operator):
     #     row = layout.row()
     #     row.prop(self,"mesh_height",icon="BLENDER",text="Mesh Height")
 
+class QUICK_OT_mesh_move(bpy.types.Operator):
+    bl_idname = 'pearl.quick_mesh_move'
+    bl_label = 'test mesh move by bmesh'
+    bl_options = {'REGISTER','UNDO'}
 
+    mesh_move_towards : bpy.props.IntProperty(
+        name="towards",
+        max=2,      # x y z
+        min=0,
+        default=0
+        )
+    mesh_move_distance : bpy.props.FloatProperty(
+        name="distance",
+        default=0)
+
+    def mesh_move(self):
+        obj = bpy.context.active_object
+        if obj.type != 'MESH':
+            return
+        # 进入编辑模式
+        bpy.ops.object.editmode_toggle()
+
+        # Get a BMesh representation
+        bm = bmesh.from_edit_mesh(obj.data)
+
+        # Modify the BMesh
+        for v in bm.verts:
+            v.co[self.mesh_move_towards] += self.mesh_move_distance
+        
+        # Show the updates in the viewport
+        # and recalculate n-gon tessellation.
+        bmesh.update_edit_mesh(obj.data, loop_triangles=True)
+
+        bpy.ops.object.editmode_toggle()
+
+    def execute(self, context):
+        self.mesh_move()
+
+        self.report({"INFO"},"test mesh move")
+        return {'FINISHED'}

@@ -1,5 +1,5 @@
 import socket
-import threading
+import multiprocessing
 
 class Recv():
     def __init__(self):
@@ -7,24 +7,27 @@ class Recv():
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind(self.address)  # 绑定服务端地址和端口
     def run(self):
-        
-        data, addr = self.s.recvfrom(1024)  # 返回数据和接入连接的（服务端）地址
-            
+        '''
         while True:
-
             data, addr = self.s.recvfrom(1024)  # 返回数据和接入连接的（服务端）地址
             data = data.decode()
             print('[Recieved]', data)
             if data == '###':  # 自定义结束字符串
                 break
         self.s.close()
-        
+        '''
         for i in range(10):
             print('2')
 
 if __name__ == "__main__":
     recv = Recv()
-    recv.run()
+    p = multiprocessing.Process(target = recv.run)
+    p.start()
+    p.join()
+    for i in range(10):
+        print('1')
+    
+
 
 
 '''

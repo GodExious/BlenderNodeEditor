@@ -1,5 +1,6 @@
 import socket
 import threading
+import time
 
 class Recv():
     def __init__(self):
@@ -8,10 +9,7 @@ class Recv():
         self.s.bind(self.address)  # 绑定服务端地址和端口
     def run(self):
         
-        data, addr = self.s.recvfrom(1024)  # 返回数据和接入连接的（服务端）地址
-            
         while True:
-
             data, addr = self.s.recvfrom(1024)  # 返回数据和接入连接的（服务端）地址
             data = data.decode()
             print('[Recieved]', data)
@@ -24,7 +22,14 @@ class Recv():
 
 if __name__ == "__main__":
     recv = Recv()
-    recv.run()
+    p = threading.Thread(target = recv.run)
+    p.start()
+    
+    for i in range(10):
+        print('1')
+    #p.join()
+    
+
 
 
 '''

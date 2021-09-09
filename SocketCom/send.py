@@ -1,5 +1,5 @@
 import socket
-
+import time
 
 class Send:
     def __init__(self):
@@ -8,8 +8,10 @@ class Send:
 
     def run(self):
         while True:
-            for i in range(10):
+            for i in range(30):
                 data = "hello"
+                time.sleep(0.5)
+                print(data)
                 self.s.sendto(data.encode(), self.address)
             data = "###"
             self.s.sendto(data.encode(), self.address)

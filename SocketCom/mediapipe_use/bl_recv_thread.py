@@ -1,14 +1,16 @@
 import socket
 import threading
 import time
+import bpy
+
 
 class Recv():
     def __init__(self):
         self.address = ('127.0.0.1', 5555)  # 服务端地址和端口
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.s.bind(self.address)  # 绑定服务端地址和端口
 
     def receive(self):
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.s.bind(self.address)  # 绑定服务端地址和端口
         while True:
             data, addr = self.s.recvfrom(1024)  # 返回数据和接入连接的（服务端）地址
             self.run(data)
@@ -17,9 +19,17 @@ class Recv():
         self.s.close()
 
     def run(self,data):
-        data = data.decode()
-        print('[Recieved]', data)
+        recv_str = data.decode()
+        recv = recv_str.split()
+        for i in range(len(recv)):
+            recv[i] = int(recv[i])
+        print('[Recieved]', recv)
+
+        bpy.context.scene.objects['Cube'].location[0]+=1
         
+
+
+
 
 if __name__ == "__main__":
     recv = Recv()

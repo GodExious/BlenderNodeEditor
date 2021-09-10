@@ -21,8 +21,8 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 weight = 640
 height = 480
 cap = cv2.VideoCapture(0)
-cap.set(3,weight)
-cap.set(4,height)
+#cap.set(3,weight)
+#cap.set(4,height)
 
 
 detect = handModule.HandDetect(static_image_mode=False,
@@ -32,6 +32,7 @@ detect = handModule.HandDetect(static_image_mode=False,
 
 while True:
     flag,img = cap.read()
+    img = cv2.flip(img,1)
 
     detect.initImage(img)
     img = detect.findHandsPoint()
@@ -64,8 +65,8 @@ while True:
         
     if len(lm_list[0])!=0:
         data = []
-        data.append(str(lm_list[0][0][1]))
-        data.append(str(lm_list[0][0][2]))
+        data.append(str(lm_list[0][0][1]/10))
+        data.append(str((height-lm_list[0][0][2])/10))
         #print(data)
         data_str = ' '.join(data)
         print(data_str)

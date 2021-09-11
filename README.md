@@ -1,10 +1,7 @@
-# QuickUse  
-QuickUse addon for blender  
-NodeEditor addon for blender(todo)  
-
-
-
-# show
+# NodeEditor
+NodeEditor addon for blender  
+learn from @atticus-lv  
+will re-write to build model-editor  
 
 
 

@@ -16,10 +16,10 @@ def set_active_output(self, context):
         self.execute_tree()
 
 
-class SimpleNodeResult(SimpleNodeBase):
+class SimpleNodeFloatResult(SimpleNodeBase):
     """A simple Result node"""
-    bl_idname = "SimpleNodeResult"
-    bl_label = 'Result'
+    bl_idname = "SimpleNodeFloatResult"
+    bl_label = 'Float Result'
 
     default_value: StringProperty(default='Need Update', name='Result Value')
     precision: IntProperty(name='Precision', default=3, update=set_active_output)
@@ -52,12 +52,12 @@ class SimpleNodeResult(SimpleNodeBase):
 
 
 def register():
-    bpy.utils.register_class(SimpleNodeResult)
+    bpy.utils.register_class(SimpleNodeFloatResult)
     bpy.types.WindowManager.sp_viewer_node = StringProperty(name='Viewer output name')
     bpy.types.Scene.sp_viewer_tree = PointerProperty(name='Viewer output tree', type=bpy.types.NodeTree)
 
 
 def unregister():
-    bpy.utils.unregister_class(SimpleNodeResult)
+    bpy.utils.unregister_class(SimpleNodeFloatResult)
     del bpy.types.WindowManager.sp_viewer_node
     del bpy.types.Scene.sp_viewer_tree

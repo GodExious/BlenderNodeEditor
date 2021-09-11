@@ -16,9 +16,7 @@ node_categories = [
 
     SimpleNodeCategory("MATH", "Math", items=[
         nodeitems_utils.NodeItem("SimpleNodeFloatFunctions"),
-        nodeitems_utils.NodeItem("SimpleNodeTrigonometric"),
-        nodeitems_utils.NodeItem("SimpleNodeComparison"),
-        nodeitems_utils.NodeItem("SimpleNodeConversion"),
+
     ]),
 
     SimpleNodeCategory("UTILITIES", "Utilities", items=[
@@ -27,7 +25,7 @@ node_categories = [
     ]),
 
     SimpleNodeCategory("OUTPUT", "Output", items=[
-        nodeitems_utils.NodeItem("SimpleNodeResult"),
+        nodeitems_utils.NodeItem("SimpleNodeFloatResult"),
 
     ]),
 

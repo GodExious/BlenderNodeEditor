@@ -11,7 +11,7 @@ def update_node(self, context):
 
 class SimpleNodeFloatFunctions(SimpleNodeBase):
     bl_idname = 'SimpleNodeFloatFunctions'
-    bl_label = 'Functions'
+    bl_label = 'Float Functions'
 
     operate_type: EnumProperty(
         name='Type',

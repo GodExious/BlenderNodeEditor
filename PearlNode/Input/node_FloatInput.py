@@ -1,18 +1,20 @@
 import bpy
-from ..BASE.node_base import SimpleNodeBase
+from bpy.props import *
+from ..BASE.node_base import NodeBase
+
 
 def update_node(self, context):
     self.execute_tree()
 
 
-class SimpleNodeFloatInput(SimpleNodeBase):
-    bl_idname = 'SimpleNodeFloatInput'
+class NodeFloatInput(NodeBase):
+    bl_idname = 'NodeFloatInput'
     bl_label = 'Float Input'
 
-    default_value: bpy.props.FloatProperty(update=update_node)
+    default_value: FloatProperty(update=update_node)
 
     def init(self, context):
-        self.create_output('SimpleNodeSocketFloat', 'output', "Output")
+        self.create_output('NodeFloatInput', 'output', "Output")
 
     def draw_buttons(self, context, layout):
         layout.prop(self, 'default_value', text='')
@@ -22,8 +24,8 @@ class SimpleNodeFloatInput(SimpleNodeBase):
 
 
 def register():
-    bpy.utils.register_class(SimpleNodeFloatInput)
+    bpy.utils.register_class(NodeFloatInput)
 
 
 def unregister():
-    bpy.utils.unregister_class(SimpleNodeFloatInput)
+    bpy.utils.unregister_class(NodeFloatInput)

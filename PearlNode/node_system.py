@@ -1,5 +1,6 @@
 import bpy
 import nodeitems_utils
+from .node_run import execute_nodes
 
 # class PearlTreeNode:
 #     @classmethod
@@ -11,33 +12,45 @@ class PearlNodeTree(bpy.types.NodeTree):
     bl_label = 'Pearl Node Editor'
     bl_icon = 'NODETREE'
 
-class PearlNodeSocket(bpy.types.NodeSocket):
-    bl_idname = 'PearlNodeSocket'
-    bl_label = 'Pearl Node Socket'
 
-    def draw(self, context, layout, node, text):
-        layout.label(text=text)
-
-    def draw_color(self, context, node):
-        return (1.0, 0.4, 0.2, 1.0)
 
 class PearlNode(bpy.types.Node):
     bl_idname = "PearlNode"
     bl_label = "PearlNode"
 
+    prepare = False # ready to process
+    # id = 1
+
     @classmethod
     def poll(cls, ntree):
         return (ntree.bl_idname == PearlNodeTree.bl_idname)
 
+    def copy(self, node):
+        execute_nodes.append(self)
 
+    def free(self):
+        execute_nodes.remove(self)
 
+    def process(self):
+        print("process: ",self)
+    
+    def todo(self):
+        for input in self.inputs:
+            # print(output.links)
+            if input.links:
+                for link in input.links:
+                    node = link.from_node
+                    print("     link from:",node)
 
-
+    '''
+    # update(self)????每次增加删除、连线节点都执行？
+    def update(self):
+        pass
+    '''
 
 
 classes = [
     PearlNodeTree,
-    PearlNodeSocket,
     PearlNode,
 
     
@@ -45,43 +58,13 @@ classes = [
 
 
 
-# node add to menu -------
-
-class PearlNodeCategory(nodeitems_utils.NodeCategory):
-    @classmethod
-    def poll(cls,context):
-        return context.space_data.tree_type == PearlNodeTree.bl_idname
-
-
-node_categories = [
-    PearlNodeCategory("1","test",items=[
-        nodeitems_utils.NodeItem('TEST_Node')
-    ]),
-    PearlNodeCategory("2","input",items=[
-        nodeitems_utils.NodeItem('TEST_Node')
-    ]),
-    PearlNodeCategory("3","output",items=[
-        nodeitems_utils.NodeItem('TEST_Node')
-    ]),
-    PearlNodeCategory("4","function",items=[
-        nodeitems_utils.NodeItem('TEST_Node')
-    ]),
-]
-
-
 
 # register -------
 def register():
-    try:
-        nodeitems_utils.unregister_node_categories("PearlNodeCategory")
-    except Exception:
-        pass
-    nodeitems_utils.register_node_categories("PearlNodeCategory", node_categories)
     for c in classes:
         bpy.utils.register_class(c)
 
 
 def unregister():
-    nodeitems_utils.unregister_node_categories("PearlNodeCategory")
     for c in classes:
         bpy.utils.unregister_class(c)

@@ -17,7 +17,7 @@ import importlib
 from itertools import groupby
 
 from . import node_system
-from . import node_base
+from . import node_node
 from . import node_category
 from . import node_socket
 from . import node_operator
@@ -38,7 +38,7 @@ bl_info = {
 def register():
     node_system.register()
     node_socket.register()
-    node_base.register()
+    node_node.register()
     node_category.register()
     node_operator.register()
     print("Pearl Node On")
@@ -46,7 +46,7 @@ def register():
 def unregister():
     node_system.unregister()
     node_socket.unregister()
-    node_base.unregister()
+    node_node.unregister()
     node_category.unregister()
     node_operator.unregister()
     print("Pearl Node Off")

@@ -1,6 +1,6 @@
 import bpy
 import nodeitems_utils
-from .node_system import PearlNodeTree
+from .node_system import *
 # node add to menu -------
 
 class PearlNodeCategory(nodeitems_utils.NodeCategory):
@@ -11,7 +11,7 @@ class PearlNodeCategory(nodeitems_utils.NodeCategory):
 
 node_categories = [
     PearlNodeCategory("1","test",items=[
-        nodeitems_utils.NodeItem('TEST_Node')
+        nodeitems_utils.NodeItem('Node_TransFloat')
     ]),
     PearlNodeCategory("2","input",items=[
         nodeitems_utils.NodeItem('Node_InputFloat'),

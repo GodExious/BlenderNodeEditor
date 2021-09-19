@@ -1,67 +1,46 @@
 import bpy
+from .node_system import *
 
-
-class PearlNodeSocket(bpy.types.NodeSocket):
-    bl_idname = 'PearlNodeSocket'
-    bl_label = 'Pearl Node Socket'
-
-    def draw(self, context, layout, node, text):
-        layout.label(text=text)
-
-    def draw_color(self, context, node):
-        return (1.0, 0.4, 0.2, 1.0)
-
-
-class NodeSocket_Int(bpy.types.NodeSocket):
+class NodeSocket_Int(PearlNodeSocket):
     bl_idname = 'NodeSocket_Int'
-    bl_label = 'Node Socket Int'
+    bl_label = 'NodeSocket_Int'
 
-    value : bpy.props.IntProperty()
+    socket_color = (0.45, 0.45, 0.45, 1.0)
+    socket_value = bpy.props.IntProperty(default=0)
 
-    def draw(self, context, layout, node, text):
-        layout.label(text=text)
-
-    def draw_color(self, context, node):
-        return (0.45, 0.45, 0.45, 1.0)
-
-
-class NodeSocket_Float(bpy.types.NodeSocket):
+class NodeSocket_Float(PearlNodeSocket):
     bl_idname = 'NodeSocket_Float'
-    bl_label = 'Pearl Node Socket Float'
+    bl_label = 'NodeSocket_Float'
 
-    value : bpy.props.IntProperty()
-
-    def draw(self, context, layout, node, text):
-        layout.label(text=text)
-
-    def draw_color(self, context, node):
-        return (0.3, 1.0, 0.8, 1.0)
+    socket_color = (0.3, 1.0, 0.8, 1.0)
+    socket_value = bpy.props.IntProperty(default=0.0)
 
 
-class NodeSocket_Vector(bpy.types.NodeSocket):
+class NodeSocket_Vector(PearlNodeSocket):
     bl_idname = 'NodeSocket_Vector'
-    bl_label = 'Pearl Node Socket Float'
+    bl_label = 'NodeSocket_Vector'
 
-    value : bpy.props.IntProperty()
+    socket_color = (1.0, 0.4, 0.2, 1.0)
+    socket_value = bpy.props.IntProperty(default=(0, 0, 0))
 
-    def draw(self, context, layout, node, text):
-        layout.label(text=text)
 
-    def draw_color(self, context, node):
-        return (1.0, 0.4, 0.2, 1.0)
+class NodeSocket_String(PearlNodeSocket):
+    bl_idname = 'NodeSocket_String'
+    bl_label = 'NodeSocket_String'
+
+    socket_color = (0.2, 0.7, 1.0, 1)
+    socket_value = bpy.props.StringProperty(default='')
+
+
 
 classes = [
-    PearlNodeSocket,
-
     NodeSocket_Int,
     NodeSocket_Float,
     NodeSocket_Vector,
+    NodeSocket_String,
 
     
 ]
-
-
-
 
 # register -------
 def register():
@@ -70,5 +49,5 @@ def register():
 
 
 def unregister():
-    for c in classes:
+    for c in reversed(classes):
         bpy.utils.unregister_class(c)

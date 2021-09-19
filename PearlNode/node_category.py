@@ -10,21 +10,26 @@ class PearlNodeCategory(nodeitems_utils.NodeCategory):
 
 
 node_categories = [
-    PearlNodeCategory("1","input",items=[
+    PearlNodeCategory("1","Input",items=[
         nodeitems_utils.NodeItem('Node_InputFloat'),
-        nodeitems_utils.NodeItem('Node_InputInt'),
         nodeitems_utils.NodeItem('Node_InputVector'),
+        nodeitems_utils.NodeItem('more'),
     ]),
-    PearlNodeCategory("2","test",items=[
+    PearlNodeCategory("2","Output",items=[
+        nodeitems_utils.NodeItem('Node_OutputFloat'),
+        nodeitems_utils.NodeItem('Node_OutputVector'),
+
+    ]),
+    PearlNodeCategory("3","Funtions",items=[
         nodeitems_utils.NodeItem('Node_TransFloat'),
         nodeitems_utils.NodeItem('Node_FunctionFloat'),
+        nodeitems_utils.NodeItem('more'),
     ]),
-    # PearlNodeCategory("3","output",items=[
+    PearlNodeCategory("4","Convert",items=[
+        nodeitems_utils.NodeItem('Node_Float2Vector'),
+        nodeitems_utils.NodeItem('Node_Vector2Float'),
 
-    # ]),
-    # PearlNodeCategory("4","function",items=[
-
-    # ]),
+    ]),
 ]
 
 

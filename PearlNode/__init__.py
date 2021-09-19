@@ -17,10 +17,14 @@ import importlib
 from itertools import groupby
 
 from . import node_system
-from . import node_node
 from . import node_category
 from . import node_socket
 from . import node_operator
+
+from . import node_node_input
+from . import node_node_function
+from . import node_node_output
+from . import node_node_convert
 
 bl_info = {
     "name" : "PearlNode",
@@ -38,15 +42,23 @@ bl_info = {
 def register():
     node_system.register()
     node_socket.register()
-    node_node.register()
     node_category.register()
     node_operator.register()
+
+    node_node_input.register()
+    node_node_function.register()
+    node_node_output.register()
+    node_node_convert.register()
     print("Pearl Node On")
 
 def unregister():
     node_system.unregister()
     node_socket.unregister()
-    node_node.unregister()
     node_category.unregister()
     node_operator.unregister()
+
+    node_node_input.unregister()
+    node_node_function.unregister()
+    node_node_output.unregister()
+    node_node_convert.unregister()
     print("Pearl Node Off")

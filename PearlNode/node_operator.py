@@ -1,5 +1,5 @@
 import bpy
-from bpy.types import Node
+import time
 from .node_system import *
 
 class PearlExecOperator(bpy.types.Operator):
@@ -16,69 +16,24 @@ class PearlExecOperator(bpy.types.Operator):
 
     def executeNodeTree(self,context):
         # 当前树 ： context.space_data.edit_tree
+
+        start = time.time()
+
         current_tree = context.space_data.edit_tree
         current_tree.executeNodes()
 
+        end = time.time()
+        total_time = (end - start)
 
-        '''
-        # 遍历节点找出能够立即执行的
-        for node in tree_nodes:
-            node.check_init()
-            print(node.name,node.prepare_num)
-            print()
+        print("nodes number: ",len(current_tree.nodes))
+        self.report({"INFO"},"finish execute node trees: "+str(total_time)+'s')
 
-            # 能够立即执行的节点 加入执行队列
-            if node.is_prepared():
-                process_nodes.append(node)
+        # 单纯传输数据 2000 节点要6.7s
+        # 601 节点要 1.8s
+        # 10节点要 0.0271s
 
 
-        # 执行队列不空，则一直执行第一个节点
-        print("\n-------------- process start")
-        while process_nodes:
-            # 执行节点
-            process_nodes[0].process()
-
-            # 检查可执行的节点      
-            process_nodes[0].check_other_prepare()
-
-            # 删除执行完的节点
-            process_nodes.remove(process_nodes[0])
-
-        # print("\n--------------",current_tree)
-        '''
-
-
-
-
-
-
-
-
-        '''
-        for node in bpy.data.node_groups[current_tree].nodes:
-            # print(node.prepare)
-            for socket in node.outputs:
-                print(id(socket))
-                for link in socket.links:
-                    print(id(link.to_socket))
-
-        
-        # 遍历所有节点，找出能够执行的节点
-        for node in bpy.data.node_groups['NodeTree'].nodes:
-            if node.prepare == True:
-                prepared_nodes.append(node)
-
-        # 执行能够执行的节点，如果产生了新的可执行节点，则加入队列
-        while(prepared_nodes):
-            # 执行节点
-            prepared_nodes[0].process()
-            # 加入新的可执行节点
-            prepared_nodes[0].todo()
-            # 删除已执行的节点
-            prepared_nodes.remove(prepared_nodes[0])
-        '''
-            
-
+       
 
 
 

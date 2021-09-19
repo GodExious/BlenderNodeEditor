@@ -88,10 +88,11 @@ class PearlNodeTree(bpy.types.NodeTree):
                     if self.tree_nodes[link.to_node.name].prepare_num == 0:
                         self.process_nodes.append(self.tree_nodes[link.to_node.name])
 
-
             # 删除执行完的节点
             self.process_nodes.remove(self.process_nodes[0])
 
+        # finished
+        
 
 class PearlNodeSocket(bpy.types.NodeSocket):
     bl_idname = 'PearlNodeSocket'

@@ -147,14 +147,18 @@ class PearlNode(bpy.types.Node):
         print("process: ",id(self), self.name, self.prepare_num)
 
     def transfer(self, socket_values):
-        print("transfer: ",self.name, self.prepare_num)
+        # print("transfer: ",self.name, self.prepare_num)
         # 遍历所有输出socket
         for output in self.outputs:
             # 遍历每个socket连接的link
             for link in output.links:
                 # 每个link末端的socket值被赋予为当前socket的值：传递
-
-                socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
+                if hasattr(socket_values[link.to_socket],'socket_verts'):
+                    socket_values[link.to_socket].socket_verts = socket_values[link.from_socket].socket_verts
+                if hasattr(socket_values[link.to_socket],'socket_bmesh'):
+                    socket_values[link.to_socket].socket_bmesh = socket_values[link.from_socket].socket_bmesh
+                else:
+                    socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
                 # print(socket_values[link.to_socket],socket_values[link.from_socket])
 
 

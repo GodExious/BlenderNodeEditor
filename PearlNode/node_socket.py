@@ -1,3 +1,4 @@
+import bmesh
 import bpy
 from .node_system import *
 
@@ -31,7 +32,17 @@ class NodeSocket_String(PearlNodeSocket):
     socket_color = (0.2, 0.7, 1.0, 1)
     socket_value : bpy.props.StringProperty(default='')
 
-# 弃用
+
+class NodeSocket_BMesh(PearlNodeSocket):
+    bl_idname = 'NodeSocket_BMesh'
+    bl_label = 'NodeSocket_BMesh'
+
+    socket_color = (0.8, 0.1, 0.5, 1)
+    socket_bmesh = []
+
+
+
+# 即将弃用
 # 单个顶点数据
 class Vert(bpy.types.PropertyGroup):
     value : bpy.props.FloatVectorProperty(default=(0.0,0.0,0.0))
@@ -43,7 +54,10 @@ class NodeSocket_Verts(PearlNodeSocket):
 
     socket_color = (0.8, 0.1, 0.5, 1)
     socket_value : bpy.props.CollectionProperty(type=Vert)
-    is_verts = True 
+    socket_verts = []
+    socket_edges = []
+    socket_faces = []
+    socket_bmesh = []
 
 
 

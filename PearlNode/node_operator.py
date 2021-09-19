@@ -24,7 +24,7 @@ class PearlExecOperator(bpy.types.Operator):
 
         end = time.time()
         total_time = (end - start)
-
+        print("------------------")
         print("nodes number: ",len(current_tree.nodes))
         self.report({"INFO"},"finish execute node trees: "+str(total_time)+'s')
 

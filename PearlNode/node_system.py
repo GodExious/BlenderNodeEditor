@@ -153,6 +153,7 @@ class PearlNode(bpy.types.Node):
             # 遍历每个socket连接的link
             for link in output.links:
                 # 每个link末端的socket值被赋予为当前socket的值：传递
+
                 socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
                 # print(socket_values[link.to_socket],socket_values[link.from_socket])
 

@@ -25,6 +25,7 @@ from . import node_node_input
 from . import node_node_function
 from . import node_node_output
 from . import node_node_convert
+from . import node_node_mesh
 
 bl_info = {
     "name" : "PearlNode",
@@ -49,6 +50,7 @@ def register():
     node_node_function.register()
     node_node_output.register()
     node_node_convert.register()
+    node_node_mesh.register()
     print("Pearl Node On")
 
 def unregister():
@@ -61,4 +63,5 @@ def unregister():
     node_node_function.unregister()
     node_node_output.unregister()
     node_node_convert.unregister()
+    node_node_mesh.unregister()
     print("Pearl Node Off")

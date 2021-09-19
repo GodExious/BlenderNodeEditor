@@ -13,7 +13,7 @@ node_categories = [
     PearlNodeCategory("1","Input",items=[
         nodeitems_utils.NodeItem('Node_InputFloat'),
         nodeitems_utils.NodeItem('Node_InputVector'),
-        nodeitems_utils.NodeItem('more'),
+        # nodeitems_utils.NodeItem('Node_InputObject'),
     ]),
     PearlNodeCategory("2","Output",items=[
         nodeitems_utils.NodeItem('Node_OutputFloat'),
@@ -23,11 +23,19 @@ node_categories = [
     PearlNodeCategory("3","Funtions",items=[
         nodeitems_utils.NodeItem('Node_TransFloat'),
         nodeitems_utils.NodeItem('Node_FunctionFloat'),
-        nodeitems_utils.NodeItem('more'),
+        # nodeitems_utils.NodeItem('Node_TransfromObject'),
+        # nodeitems_utils.NodeItem('Node_FunctionVector'),
     ]),
     PearlNodeCategory("4","Convert",items=[
         nodeitems_utils.NodeItem('Node_Float2Vector'),
         nodeitems_utils.NodeItem('Node_Vector2Float'),
+
+    ]),
+    PearlNodeCategory("5","Mesh",items=[
+        nodeitems_utils.NodeItem('Node_InputObject'),
+        nodeitems_utils.NodeItem('Node_TransfromObject'),
+        nodeitems_utils.NodeItem('Node_Object2Mesh'),
+        nodeitems_utils.NodeItem('Node_MeshAppoint'),
 
     ]),
 ]

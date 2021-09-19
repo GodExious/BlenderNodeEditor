@@ -49,9 +49,6 @@ class Node_InputVector(PearlNode):
 
 
 
-
-
-
 classes = [
     Node_InputFloat,
     Node_InputVector,

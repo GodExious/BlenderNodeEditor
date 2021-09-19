@@ -31,6 +31,20 @@ class NodeSocket_String(PearlNodeSocket):
     socket_color = (0.2, 0.7, 1.0, 1)
     socket_value : bpy.props.StringProperty(default='')
 
+# 弃用
+# 单个顶点数据
+class Vert(bpy.types.PropertyGroup):
+    value : bpy.props.FloatVectorProperty(default=(0.0,0.0,0.0))
+
+# 顶点数据集
+class NodeSocket_Verts(PearlNodeSocket):
+    bl_idname = 'NodeSocket_Verts'
+    bl_label = 'NodeSocket_Verts'
+
+    socket_color = (0.8, 0.1, 0.5, 1)
+    socket_value : bpy.props.CollectionProperty(type=Vert)
+    is_verts = True 
+
 
 
 classes = [
@@ -38,6 +52,9 @@ classes = [
     NodeSocket_Float,
     NodeSocket_Vector,
     NodeSocket_String,
+
+    Vert,
+    NodeSocket_Verts,
 
     
 ]

@@ -6,14 +6,14 @@ class NodeSocket_Int(PearlNodeSocket):
     bl_label = 'NodeSocket_Int'
 
     socket_color = (0.45, 0.45, 0.45, 1.0)
-    socket_value = bpy.props.IntProperty(default=0)
+    socket_value : bpy.props.IntProperty(default=0)
 
 class NodeSocket_Float(PearlNodeSocket):
     bl_idname = 'NodeSocket_Float'
     bl_label = 'NodeSocket_Float'
 
     socket_color = (0.3, 1.0, 0.8, 1.0)
-    socket_value = bpy.props.IntProperty(default=0.0)
+    socket_value : bpy.props.FloatProperty(default=0.0)
 
 
 class NodeSocket_Vector(PearlNodeSocket):
@@ -21,7 +21,7 @@ class NodeSocket_Vector(PearlNodeSocket):
     bl_label = 'NodeSocket_Vector'
 
     socket_color = (1.0, 0.4, 0.2, 1.0)
-    socket_value = bpy.props.IntProperty(default=(0, 0, 0))
+    socket_value : bpy.props.FloatVectorProperty(default=(0, 0, 0))
 
 
 class NodeSocket_String(PearlNodeSocket):
@@ -29,7 +29,7 @@ class NodeSocket_String(PearlNodeSocket):
     bl_label = 'NodeSocket_String'
 
     socket_color = (0.2, 0.7, 1.0, 1)
-    socket_value = bpy.props.StringProperty(default='')
+    socket_value : bpy.props.StringProperty(default='')
 
 
 

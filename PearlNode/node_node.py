@@ -23,12 +23,17 @@ class Node_InputFloat(PearlNode):
         self.outputs.new(NodeSocket_Float.bl_idname, name="output")
     
     def draw_buttons(self,context,layout):
-        layout.prop(self, 'node_value', text='')    
+        layout.prop(self, 'node_value', text='')  
 
-'''
     def process(self):
         print("process: ",self.name, self.prepare_num)
-'''
+        self.outputs[0].socket_value = self.node_value
+
+        print(self.outputs[0].socket_value)
+
+        # 直接传递也会修改socket_value
+        # print(socket_values[self.outputs[0]].socket_value)
+        
 
 class Node_FunctionFloat(PearlNode):
     bl_idname = "Node_FunctionFloat"
@@ -49,19 +54,14 @@ class Node_TransFloat(PearlNode):
     bl_idname = "Node_TransFloat"
     bl_label = "Node_TransFloat"
 
-    # need one input to process
-    # prepare = False
-    '''
+    
     def process(self):
         print("process: ",self.name, self.prepare_num)
-        # 遍历所有输出socket
-        for output in self.outputs:
-            # 遍历每个socket连接的link
-            for link in output.links:
-                # 每个link末端的socket值被赋予为当前socket的值：传递
-                # socket_values[id(link.to_socket)] = socket_values[id(self.inputs[0])]
-                pass
-    '''            
+        self.outputs[0].socket_value = self.inputs[0].socket_value
+        print(self.inputs[0].socket_value)
+        print(self.outputs[0].socket_value)
+                
+               
     def init(self, context):
         self.inputs.new(NodeSocket_Float.bl_idname,name="input")
         self.outputs.new(NodeSocket_Float.bl_idname, name="output")

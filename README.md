@@ -5,6 +5,12 @@ will re-write to build model-editor
 
 
 
+## Show
+
+![1](./doc/1.png)
+
+
+
 ## Develop Need
 
 fake-bpy-module  

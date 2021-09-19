@@ -15,30 +15,42 @@ class PearlExecOperator(bpy.types.Operator):
         return {'FINISHED'}
 
     def executeNodeTree(self,context):
-        # 当前树 ： context.space_data.edit_tree.name
-        current_tree = context.space_data.edit_tree.name
-        print("\n-------------- ",current_tree)
+        # 当前树 ： context.space_data.edit_tree
+        current_tree = context.space_data.edit_tree
+        current_tree.executeNodes()
+
+
+        '''
         # 遍历节点找出能够立即执行的
-        for node in bpy.data.node_groups[current_tree].nodes:
+        for node in tree_nodes:
             node.check_init()
-            print(node.is_prepared(),id(node),node.prepare_num)
+            print(node.name,node.prepare_num)
+            print()
+
             # 能够立即执行的节点 加入执行队列
             if node.is_prepared():
                 process_nodes.append(node)
-        
+
+
         # 执行队列不空，则一直执行第一个节点
         print("\n-------------- process start")
         while process_nodes:
             # 执行节点
             process_nodes[0].process()
-            
-            # 检查可执行的节点
+
+            # 检查可执行的节点      
             process_nodes[0].check_other_prepare()
 
             # 删除执行完的节点
             process_nodes.remove(process_nodes[0])
 
         # print("\n--------------",current_tree)
+        '''
+
+
+
+
+
 
 
 

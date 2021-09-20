@@ -106,7 +106,7 @@ class PearlNodeSocket(bpy.types.NodeSocket):
     bl_label = 'Pearl Node Socket'
 
     socket_color = (0.5, 0.5, 0.5, 1)
-    # socket_value : bpy.props.IntProperty()
+    socket_value : bpy.props.IntProperty()
 
     def draw(self, context, layout, node, text):
         layout.label(text=text)
@@ -160,12 +160,6 @@ class PearlNode(bpy.types.Node):
             # 遍历每个socket连接的link
             for link in output.links:
                 # 每个link末端的socket值被赋予为当前socket的值：传递
-                '''
-                # if hasattr(socket_values[link.to_socket],'socket_mesh_value'):
-                #     socket_values[link.to_socket].socket_mesh_value = socket_values[link.from_socket].socket_mesh_value
-                # else:
-                #     socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
-                '''
                 socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
 
 

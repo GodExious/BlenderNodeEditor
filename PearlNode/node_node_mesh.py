@@ -48,6 +48,7 @@ class Node_TransfromObject(PearlNode):
 
         bm = bmesh.from_edit_mesh(obj.data)
         for v in bm.verts:
+# TODO co.x = self.node_value[0]  + 相对位置
             v.co.x += self.node_value[0] 
             v.co.y += self.node_value[1] 
             v.co.z += self.node_value[2] 
@@ -66,12 +67,6 @@ class Node_TransfromObject(PearlNode):
         col.prop(self, 'node_value', text='')  
 
 
-class Node_GetMeshPoints():
-    pass
-
-class Node_GenerateMesh():
-    pass
-
 
 class Node_MeshAppoint(PearlNode):
     bl_idname = "Node_MeshAppoint"
@@ -84,47 +79,38 @@ class Node_MeshAppoint(PearlNode):
         col.prop_search(self, 'node_value', context.scene, "objects", text='Object', icon = "OBJECT_DATA")
 
     def process(self):
-        print("test: ",len(self.inputs[0].socket_value),len(self.inputs[1].socket_value),len(self.inputs[2].socket_value))
-
-
-        # 进入编辑模式
-        obj = bpy.data.objects[self.node_value]
-        obj.select_set(True)
-        bpy.ops.object.mode_set(mode="EDIT")
-
-        # 获取物体bmesh
-        # bm = bmesh.from_edit_mesh(obj.data)
-        # bm.clear()
         bm = bmesh.new()
 
+        verts_str = self.inputs[0].socket_value
+        verts_list = self.inputs[0].string2list(verts_str)
+        edges_str = self.inputs[1].socket_value
+        edges_list = self.inputs[1].string2list(edges_str)
+        faces_str = self.inputs[2].socket_value
+        faces_list = self.inputs[2].string2list(faces_str)
 
-        # for v in range(len(self.inputs[0].socket_value)):
-        #     vertex = bm.verts.new()
-        #     vertex.co = [i for i in self.inputs[0].socket_value[v]]
-        #     vertex.index = v
+        for v in range(len(verts_list)):
+            vertex = bm.verts.new()
+            vertex.co = [i for i in verts_list[v]]
+            vertex.index = v
 
-        # for e in range(len(self.inputs[1].socket_value)):
-        #     l = [i for i in self.inputs[1].socket_value[e]]
-        #     bm.verts.ensure_lookup_table()
-        #     bm.edges.new([bm.verts[l[0]],bm.verts[l[1]]])
+        for e in range(len(edges_list)):
+            l = [i for i in edges_list[e]]
+            bm.verts.ensure_lookup_table()
+            bm.edges.new([bm.verts[l[0]],bm.verts[l[1]]])
  
-        # for f in range(len(self.inputs[2].socket_value)):
-        #     l = [i for i in self.inputs[2].socket_value[f]]
-        #     f_list = []
-        #     for i in l:
-        #         f_list.append(bm.verts[i])
-        #     bm.faces.new(f_list)
+        for f in range(len(faces_list)):
+            l = [i for i in faces_list[f]]
+            f_list = []
+            for i in l:
+                f_list.append(bm.verts[i])
+            bm.faces.new(f_list)
 
-        # 回到物体模式
-        # bmesh.update_edit_mesh(obj.data, loop_triangles=True)
-        bpy.ops.object.mode_set(mode='OBJECT')
-        bpy.ops.object.select_all(False)
+
+        # 采用bmesh方法不会自动刷新物体显示，使用select_all()来刷新一下
+        obj = bpy.data.objects[self.node_value]
         bm.to_mesh(obj.data)
         bm.free()
-
-        # self.inputs[0].socket_value.clear()
-        # self.inputs[1].socket_value.clear()
-        # self.inputs[2].socket_value.clear()
+        bpy.ops.object.select_all()
 
      
     def init(self, context):
@@ -132,48 +118,6 @@ class Node_MeshAppoint(PearlNode):
         self.inputs.new(NodeSocket_Edges.bl_idname,name="edges")
         self.inputs.new(NodeSocket_Faces.bl_idname,name="faces")
 
-
-class Node_ObjectAppoint(PearlNode):
-    bl_idname = "Node_ObjectAppoint"
-    bl_label = "ObjectAppoint"
-
-    node_value : bpy.props.StringProperty(name='object', default='')
-    
-    def draw_buttons(self,context,layout):
-        col = layout.column(align=1)
-        col.prop_search(self, 'node_value', context.scene, "objects", text='Object', icon = "OBJECT_DATA")
-
-    def process(self):
-        obj_name = self.inputs[0].socket_value
-        obj = bpy.data.objects[obj_name]
-        mesh = bpy.data.meshes[obj_name]
-        to_obj = bpy.data.objects[self.node_value]
-        # to_obj.to_mesh
-        to_obj.data = mesh
-        
-
-     
-    def init(self, context):
-        self.inputs.new(NodeSocket_String.bl_idname,name="obj")
-
-class Node_GetObjectMesh(PearlNode):
-    bl_idname = "Node_GetObjectMesh"
-    bl_label = "GetObjectMesh"
-
-    node_value : bpy.props.StringProperty(name='object', default='')
-    
-    def draw_buttons(self,context,layout):
-        col = layout.column(align=1)
-        col.prop_search(self, 'node_value', context.scene, "objects", text='Object', icon = "OBJECT_DATA")
-
-    def process(self):
-        obj_name = self.inputs[0].socket_value
-        obj = bpy.data.objects[obj_name]
-        mesh = bpy.data.meshes[obj_name]
-
-     
-    def init(self, context):
-        self.inputs.new(NodeSocket_Verts.bl_idname,name="obj")
 
 
 class Node_Object2BMesh(PearlNode):
@@ -183,33 +127,28 @@ class Node_Object2BMesh(PearlNode):
     
     def process(self):
         # 清空缓冲
-        self.outputs[0].socket_value.clear()
-        self.outputs[1].socket_value.clear()
-        self.outputs[2].socket_value.clear()
-
-        # 进入编辑模式
-        obj = bpy.data.objects[self.inputs[0].socket_value]
-        obj.select_set(True)
-        bpy.ops.object.mode_set(mode="EDIT")
+        # not need anymore
 
         # 获取物体bmesh
-        bm = bmesh.from_edit_mesh(obj.data)
+        bm = bmesh.new()
+        obj = bpy.data.objects[self.inputs[0].socket_value]
+        bm.from_mesh(obj.data)
 
+        verts_list = []
+        edges_list = []
+        faces_list = []
         for v in bm.verts:
-            self.outputs[0].socket_value.append([i for i in v.co])
+            verts_list.append([i for i in v.co])
         for e in bm.edges:
-            self.outputs[1].socket_value.append([i.index for i in e.verts])
+            edges_list.append([i.index for i in e.verts])
         for f in bm.faces:
-            self.outputs[2].socket_value.append([i.index for i in f.verts])
+            faces_list.append([i.index for i in f.verts])
 
-# TODO 需要吗？
-        # bm.free()
-        
-        # 回到物体模式
-        bpy.ops.object.mode_set(mode='OBJECT')
-        bpy.ops.object.select_all(False)
 
-        print("test output: ",len(self.outputs[0].socket_value),len(self.outputs[1].socket_value),len(self.outputs[2].socket_value))
+        self.outputs[0].socket_value = self.outputs[0].list2string(verts_list)
+        self.outputs[1].socket_value = self.outputs[1].list2string(edges_list)
+        self.outputs[2].socket_value = self.outputs[2].list2string(faces_list)
+        bm.free()
 
           
     def init(self, context):
@@ -230,8 +169,7 @@ classes = [
     Node_TransfromObject,
     Node_Object2BMesh,
     Node_MeshAppoint,
-    Node_ObjectAppoint,
-    Node_GetObjectMesh,
+
 
 ]
 

@@ -15,6 +15,7 @@ class NodeSocket_Float(PearlNodeSocket):
 
     socket_color = (0.3, 1.0, 0.8, 1.0)
     socket_value : bpy.props.FloatProperty(default=0.0)
+    
 
 
 class NodeSocket_Vector(PearlNodeSocket):
@@ -43,7 +44,27 @@ class NodeSocket_Verts(PearlNodeSocket):
 
     is_part_of_bmesh = True
     socket_color = (0.8, 0.1, 0.5, 1)
-    socket_value = [1,2,3]
+    socket_value : bpy.props.StringProperty(default='')
+
+        # 字符串转二维数组
+    def string2list(self,st):
+        list1 = st.split('%')
+        result = []
+        for l in list1:
+            temp = l.split('@')
+            temp = [float(i) for i in temp]
+            result.append(temp)
+        return result
+    # 二维数组转字符串
+    def list2string(self,l):
+        result = ''
+        for i in l:
+            for j in i:
+                result += str(j)+'@'
+            result = result[:-1]
+            result += '%'
+        result = result[:-1]
+        return result
 
 class NodeSocket_Edges(PearlNodeSocket):
     bl_idname = 'NodeSocket_Edges'
@@ -51,7 +72,27 @@ class NodeSocket_Edges(PearlNodeSocket):
 
     is_part_of_bmesh = True
     socket_color = (0.8, 0.1, 0.5, 1)
-    socket_value = []
+    socket_value : bpy.props.StringProperty(default='')
+
+        # 字符串转二维数组
+    def string2list(self,st):
+        list1 = st.split('%')
+        result = []
+        for l in list1:
+            temp = l.split('@')
+            temp = [int(i) for i in temp]
+            result.append(temp)
+        return result
+    # 二维数组转字符串
+    def list2string(self,l):
+        result = ''
+        for i in l:
+            for j in i:
+                result += str(j)+'@'
+            result = result[:-1]
+            result += '%'
+        result = result[:-1]
+        return result
 
 class NodeSocket_Faces(PearlNodeSocket):
     bl_idname = 'NodeSocket_Faces'
@@ -59,14 +100,34 @@ class NodeSocket_Faces(PearlNodeSocket):
 
     is_part_of_bmesh = True
     socket_color = (0.8, 0.1, 0.5, 1)
-    socket_value = []
+    socket_value : bpy.props.StringProperty(default='')
+
+        # 字符串转二维数组
+    def string2list(self,st):
+        list1 = st.split('%')
+        result = []
+        for l in list1:
+            temp = l.split('@')
+            temp = [int(i) for i in temp]
+            result.append(temp)
+        return result
+    # 二维数组转字符串
+    def list2string(self,l):
+        result = ''
+        for i in l:
+            for j in i:
+                result += str(j)+'@'
+            result = result[:-1]
+            result += '%'
+        result = result[:-1]
+        return result
 
 class NodeSocket_Object(PearlNodeSocket):
     bl_idname = 'NodeSocket_Object'
     bl_label = 'NodeSocket_Object'
 
     socket_color = (0.8, 0.1, 0.5, 1)
-    socket_value = []
+    socket_value : bpy.props.StringProperty(default='')
 
 
 

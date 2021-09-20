@@ -35,9 +35,7 @@ node_categories = [
         nodeitems_utils.NodeItem('Node_InputObject'),
         nodeitems_utils.NodeItem('Node_TransfromObject'),
         nodeitems_utils.NodeItem('Node_Object2BMesh'),
-        nodeitems_utils.NodeItem('Node_GetObjectMesh'),
         nodeitems_utils.NodeItem('Node_MeshAppoint'),
-        nodeitems_utils.NodeItem('Node_ObjectAppoint'),
 
     ]),
 ]

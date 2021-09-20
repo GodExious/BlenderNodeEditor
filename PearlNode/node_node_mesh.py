@@ -83,27 +83,28 @@ class Node_MeshAppoint(PearlNode):
 
         verts_str = self.inputs[0].socket_value
         verts_list = self.inputs[0].string2list(verts_str)
-        edges_str = self.inputs[1].socket_value
-        edges_list = self.inputs[1].string2list(edges_str)
-        faces_str = self.inputs[2].socket_value
-        faces_list = self.inputs[2].string2list(faces_str)
-
         for v in range(len(verts_list)):
             vertex = bm.verts.new()
             vertex.co = [i for i in verts_list[v]]
             vertex.index = v
 
-        for e in range(len(edges_list)):
-            l = [i for i in edges_list[e]]
-            bm.verts.ensure_lookup_table()
-            bm.edges.new([bm.verts[l[0]],bm.verts[l[1]]])
+        if self.inputs[1].is_linked:
+            edges_str = self.inputs[1].socket_value
+            edges_list = self.inputs[1].string2list(edges_str)
+            for e in range(len(edges_list)):
+                l = [i for i in edges_list[e]]
+                bm.verts.ensure_lookup_table()
+                bm.edges.new([bm.verts[l[0]],bm.verts[l[1]]])
  
-        for f in range(len(faces_list)):
-            l = [i for i in faces_list[f]]
-            f_list = []
-            for i in l:
-                f_list.append(bm.verts[i])
-            bm.faces.new(f_list)
+        if self.inputs[2].is_linked:
+            faces_str = self.inputs[2].socket_value
+            faces_list = self.inputs[2].string2list(faces_str)
+            for f in range(len(faces_list)):
+                l = [i for i in faces_list[f]]
+                f_list = []
+                for i in l:
+                    f_list.append(bm.verts[i])
+                bm.faces.new(f_list)
 
 
         # 采用bmesh方法不会自动刷新物体显示，使用select_all()来刷新一下

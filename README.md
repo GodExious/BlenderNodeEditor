@@ -11,6 +11,8 @@ Will re-write to build model-editor
 
 
 
+![2](./doc/2.png)
+
 ## Current
 
 * 基本框架：自定义的tree-node-socket、tree中的node与socket采用字典查询、基于socket入度的拓扑排序
@@ -33,7 +35,7 @@ Will re-write to build model-editor
 * 节点的UI-update和process-Update
 * 优化socket_values的参数传递 与 key
 * 数据结果的自动刷新
-* 将入度判断从prepare_num改为自定义函数查看link返回TrueFalse
+* 将入度判断从socket数量的prepare_num改为input-link的num，或者找到更好的入度排序方法
 * 封装string2list与list2string
 
 
@@ -64,3 +66,4 @@ https://github.com/nortikin/sverchok
 ## notice
 
 建立object需要mesh，删除object时不会删除mesh,需要清理未使用数据clean  
+

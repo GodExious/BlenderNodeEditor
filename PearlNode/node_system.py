@@ -67,9 +67,6 @@ class PearlNodeTree(bpy.types.NodeTree):
     def executeNodes(self):
         print("\n-------------- ",self.name)
         self.addExecuteNodes()
-        # self.printNodes()
-        # self.printSockets()
-        # self.printProcessNodes()
 
         # 执行队列不空，则一直执行第一个节点
         print("\n-------------- process start")
@@ -91,6 +88,7 @@ class PearlNodeTree(bpy.types.NodeTree):
             #TODO USE
             for output in self.process_nodes[0].outputs:
                 for link in output.links:
+                    # 将num改为link总数
                     self.tree_nodes[link.to_node.name].prepare_num -= 1
                     if self.tree_nodes[link.to_node.name].is_prepared() == True:
                         self.process_nodes.append(self.tree_nodes[link.to_node.name])
@@ -197,9 +195,6 @@ class PearlNode(bpy.types.Node):
 
 
 
-
-
-
 classes = [
     PearlNodeTree,
     PearlNodeSocket,
@@ -207,10 +202,6 @@ classes = [
 
     
 ]
-
-
-
-
 # register -------
 def register():
     for c in classes:

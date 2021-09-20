@@ -67,8 +67,8 @@ class PearlNodeTree(bpy.types.NodeTree):
     def executeNodes(self):
         print("\n-------------- ",self.name)
         self.addExecuteNodes()
-        self.printNodes()
-        self.printSockets()
+        # self.printNodes()
+        # self.printSockets()
         # self.printProcessNodes()
 
         # 执行队列不空，则一直执行第一个节点
@@ -80,14 +80,21 @@ class PearlNodeTree(bpy.types.NodeTree):
             # 传递数据
             self.process_nodes[0].transfer(self.socket_values)
 
+# TODO 修改检查为检查继承判断函数
             # 检查可执行的节点    
-            # self.process_nodes[0].check_other_prepare()
             for output in self.process_nodes[0].outputs:
                 for link in output.links:
                     self.tree_nodes[link.to_node.name].prepare_num -= 1
                     if self.tree_nodes[link.to_node.name].prepare_num == 0:
                         self.process_nodes.append(self.tree_nodes[link.to_node.name])
-
+            '''
+            #TODO USE
+            for output in self.process_nodes[0].outputs:
+                for link in output.links:
+                    self.tree_nodes[link.to_node.name].prepare_num -= 1
+                    if self.tree_nodes[link.to_node.name].is_prepared() == True:
+                        self.process_nodes.append(self.tree_nodes[link.to_node.name])
+            '''
             # 删除执行完的节点
             self.process_nodes.remove(self.process_nodes[0])
 
@@ -99,7 +106,7 @@ class PearlNodeSocket(bpy.types.NodeSocket):
     bl_label = 'Pearl Node Socket'
 
     socket_color = (0.5, 0.5, 0.5, 1)
-    socket_value : bpy.props.IntProperty()
+    # socket_value : bpy.props.IntProperty()
 
     def draw(self, context, layout, node, text):
         layout.label(text=text)
@@ -153,13 +160,13 @@ class PearlNode(bpy.types.Node):
             # 遍历每个socket连接的link
             for link in output.links:
                 # 每个link末端的socket值被赋予为当前socket的值：传递
-                if hasattr(socket_values[link.to_socket],'socket_verts'):
-                    socket_values[link.to_socket].socket_verts = socket_values[link.from_socket].socket_verts
-                if hasattr(socket_values[link.to_socket],'socket_bmesh'):
-                    socket_values[link.to_socket].socket_bmesh = socket_values[link.from_socket].socket_bmesh
-                else:
-                    socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
-                # print(socket_values[link.to_socket],socket_values[link.from_socket])
+                '''
+                # if hasattr(socket_values[link.to_socket],'socket_mesh_value'):
+                #     socket_values[link.to_socket].socket_mesh_value = socket_values[link.from_socket].socket_mesh_value
+                # else:
+                #     socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
+                '''
+                socket_values[link.to_socket].socket_value = socket_values[link.from_socket].socket_value
 
 
     def is_prepared(self):

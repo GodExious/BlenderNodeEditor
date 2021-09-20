@@ -33,16 +33,45 @@ class NodeSocket_String(PearlNodeSocket):
     socket_value : bpy.props.StringProperty(default='')
 
 
-class NodeSocket_BMesh(PearlNodeSocket):
-    bl_idname = 'NodeSocket_BMesh'
-    bl_label = 'NodeSocket_BMesh'
+
+
+
+
+class NodeSocket_Verts(PearlNodeSocket):
+    bl_idname = 'NodeSocket_Verts'
+    bl_label = 'NodeSocket_Verts'
+
+    is_part_of_bmesh = True
+    socket_color = (0.8, 0.1, 0.5, 1)
+    socket_value = [1,2,3]
+
+class NodeSocket_Edges(PearlNodeSocket):
+    bl_idname = 'NodeSocket_Edges'
+    bl_label = 'NodeSocket_Edges'
+
+    is_part_of_bmesh = True
+    socket_color = (0.8, 0.1, 0.5, 1)
+    socket_value = []
+
+class NodeSocket_Faces(PearlNodeSocket):
+    bl_idname = 'NodeSocket_Faces'
+    bl_label = 'NodeSocket_Faces'
+
+    is_part_of_bmesh = True
+    socket_color = (0.8, 0.1, 0.5, 1)
+    socket_value = []
+
+class NodeSocket_Object(PearlNodeSocket):
+    bl_idname = 'NodeSocket_Object'
+    bl_label = 'NodeSocket_Object'
 
     socket_color = (0.8, 0.1, 0.5, 1)
-    socket_bmesh = []
+    socket_value = []
 
 
 
 # 即将弃用
+'''
 # 单个顶点数据
 class Vert(bpy.types.PropertyGroup):
     value : bpy.props.FloatVectorProperty(default=(0.0,0.0,0.0))
@@ -58,7 +87,7 @@ class NodeSocket_Verts(PearlNodeSocket):
     socket_edges = []
     socket_faces = []
     socket_bmesh = []
-
+'''
 
 
 classes = [
@@ -67,9 +96,10 @@ classes = [
     NodeSocket_Vector,
     NodeSocket_String,
 
-    Vert,
     NodeSocket_Verts,
-
+    NodeSocket_Edges,
+    NodeSocket_Faces,
+    NodeSocket_Object,
     
 ]
 

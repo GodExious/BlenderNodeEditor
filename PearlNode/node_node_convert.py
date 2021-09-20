@@ -21,6 +21,7 @@ class Node_Float2Vector(PearlNode):
         self.inputs.new(NodeSocket_Float.bl_idname, name="input2")
         self.inputs.new(NodeSocket_Float.bl_idname, name="input3")
         self.outputs.new(NodeSocket_Vector.bl_idname, name="output")
+
     
     def draw_buttons(self,context,layout):
         col = layout.column(align=1)

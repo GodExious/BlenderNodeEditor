@@ -33,6 +33,13 @@ Will re-write to build model-editor
 * 节点的UI-update和process-Update
 * 优化socket_values的参数传递 与 key
 * 数据结果的自动刷新
+* 将入度判断从prepare_num改为自定义函数查看link返回TrueFalse
+
+
+
+## Large Change
+
+* 原来socket父类内置有被继承的socket_value，但是由于子类数据类型的变化，父类种的socket_value已经删除，所有的子类必须自己定义socket_value才能满足transfer 传递socket_value的需求
 
 
 

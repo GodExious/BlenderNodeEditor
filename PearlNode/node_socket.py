@@ -46,7 +46,7 @@ class NodeSocket_Verts(PearlNodeSocket):
     socket_color = (0.8, 0.1, 0.5, 1)
     socket_value : bpy.props.StringProperty(default='')
 
-        # 字符串转二维数组
+    # 字符串转二维数组
     def string2list(self,st):
         list1 = st.split('%')
         result = []
@@ -74,7 +74,7 @@ class NodeSocket_Edges(PearlNodeSocket):
     socket_color = (0.8, 0.1, 0.5, 1)
     socket_value : bpy.props.StringProperty(default='')
 
-        # 字符串转二维数组
+    # 字符串转二维数组
     def string2list(self,st):
         list1 = st.split('%')
         result = []
@@ -102,7 +102,7 @@ class NodeSocket_Faces(PearlNodeSocket):
     socket_color = (0.8, 0.1, 0.5, 1)
     socket_value : bpy.props.StringProperty(default='')
 
-        # 字符串转二维数组
+    # 字符串转二维数组
     def string2list(self,st):
         list1 = st.split('%')
         result = []

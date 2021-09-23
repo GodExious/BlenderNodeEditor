@@ -13,6 +13,8 @@ Will re-write to build model-editor
 
 ![2](./doc/2.png)
 
+
+
 ## Current
 
 * 基本框架：自定义的tree-node-socket、tree中的node与socket采用字典查询、基于socket入度的拓扑排序
@@ -35,15 +37,17 @@ Will re-write to build model-editor
 * 节点的UI-update和process-Update
 * 优化socket_values的参数传递 与 key
 * 数据结果的自动刷新
-* 将入度判断从socket数量的prepare_num改为input-link的num，或者找到更好的入度排序方法
+* 将入度判断从socket数量的prepare_num改为input-link的num+必须连接的函数判断
 * 封装string2list与list2string
+* 封装init文件自动加载路径下模块
+* 让process返回True/False，确定节点是否完成计算，以便决定是否执行transfer
 
 
 
 ## Large Change
 
-* 原来socket父类内置有被继承的socket_value，但是由于子类数据类型的变化，父类种的socket_value已经删除，所有的子类必须自己定义socket_value才能满足transfer 传递socket_value的需求(已回退)
-* 原来使用原生list类型用于存储bmesh的点边面数据，但是存在覆盖的问题无法解决，采用StringProperty代替
+* 原来socket父类内置有被继承的socket_value，但是由于子类数据类型的变化，父类中的socket_value已经删除，所有的子类必须自己定义socket_value才能满足transfer 传递socket_value的需求(已弃用)
+* 原来使用原生list类型用于存储bmesh的点边面数据，但是存在覆盖的问题无法解决，采用转换StringProperty代替
 
 
 
@@ -61,6 +65,8 @@ https://gitlab.com/AquaticNightmare/rigging_nodes
 https://github.com/atticus-lv/simple_node_tree  
 https://github.com/aachman98/Sorcar  
 https://github.com/nortikin/sverchok  
+
+
 
 
 ## notice

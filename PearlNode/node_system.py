@@ -124,7 +124,7 @@ class PearlNode(bpy.types.Node):
     def poll(cls, ntree):
         return (ntree.bl_idname == PearlNodeTree.bl_idname)
 
-
+    # 已弃用、且字典不再以id为key
     def add_input(self, type, socket_name, value=None):
         input = self.inputs.new(type, name=socket_name)
         # if value:
@@ -199,7 +199,6 @@ classes = [
     PearlNodeTree,
     PearlNodeSocket,
     PearlNode,
-
     
 ]
 # register -------

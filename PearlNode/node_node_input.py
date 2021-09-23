@@ -22,8 +22,9 @@ class Node_InputFloat(PearlNode):
         layout.prop(self, 'node_value', text='')  
 
     def process(self):
-        # print("process: ",self.name, self.prepare_num)
+        print("process: ",self.name)
         self.outputs[0].socket_value = self.node_value
+        return True
 
         # 直接传递也会修改socket_value
         # print(socket_values[self.outputs[0]].socket_value)
@@ -44,7 +45,9 @@ class Node_InputVector(PearlNode):
         col.prop(self, 'node_value', text='')
 
     def process(self):
+        print("process: ",self.name)
         self.outputs[0].socket_value = self.node_value
+        return True
 
 
 

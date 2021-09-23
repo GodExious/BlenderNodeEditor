@@ -28,10 +28,12 @@ class Node_Float2Vector(PearlNode):
         col.prop(self, 'node_value', text='')
 
     def process(self):
+        print("process: ",self.name)
         self.outputs[0].socket_value[0] = self.inputs[0].socket_value
         self.outputs[0].socket_value[1] = self.inputs[1].socket_value
         self.outputs[0].socket_value[2] = self.inputs[2].socket_value
         self.node_value = self.outputs[0].socket_value
+        return True
 
 
         
@@ -54,10 +56,12 @@ class Node_Vector2Float(PearlNode):
         col.prop(self, 'node_value', text='')
 
     def process(self):
+        print("process: ",self.name)
         self.outputs[0].socket_value = self.inputs[0].socket_value[0]
         self.outputs[1].socket_value = self.inputs[0].socket_value[1]
         self.outputs[2].socket_value = self.inputs[0].socket_value[2]
         self.node_value = self.inputs[0].socket_value
+        return True
 
 
 

@@ -30,7 +30,9 @@ class Node_InputObject(PearlNode):
         col.prop_search(self, 'node_value', context.scene, "objects", text='Object', icon = "OBJECT_DATA")
 
     def process(self):
+        print("process: ",self.name)
         self.outputs[0].socket_value = self.node_value
+        return True
 
 class Node_TransfromObject(PearlNode):
     bl_idname = "Node_TransfromObject"
@@ -61,6 +63,12 @@ class Node_TransfromObject(PearlNode):
     def init(self, context):
         self.inputs.new(NodeSocket_String.bl_idname,name="input")
         self.outputs.new(NodeSocket_String.bl_idname,name="output")
+    # 必须连接Object
+    def is_prepared(self):
+        if not self.inputs[0].is_linked:
+            return False
+        return self.link_num == 0
+
     
     def draw_buttons(self,context,layout):
         col = layout.column(align=1)
@@ -79,6 +87,7 @@ class Node_MeshAppoint(PearlNode):
         col.prop_search(self, 'node_value', context.scene, "objects", text='Object', icon = "OBJECT_DATA")
 
     def process(self):
+        print("process: ",self.name)
         bm = bmesh.new()
 
         verts_str = self.inputs[0].socket_value
@@ -87,13 +96,13 @@ class Node_MeshAppoint(PearlNode):
             vertex = bm.verts.new()
             vertex.co = [i for i in verts_list[v]]
             vertex.index = v
+        bm.verts.ensure_lookup_table()
 
         if self.inputs[1].is_linked:
             edges_str = self.inputs[1].socket_value
             edges_list = self.inputs[1].string2list(edges_str)
             for e in range(len(edges_list)):
                 l = [i for i in edges_list[e]]
-                bm.verts.ensure_lookup_table()
                 bm.edges.new([bm.verts[l[0]],bm.verts[l[1]]])
  
         if self.inputs[2].is_linked:
@@ -113,11 +122,16 @@ class Node_MeshAppoint(PearlNode):
         bm.free()
         bpy.ops.object.select_all()
 
-     
+     # 输入点边面数据
     def init(self, context):
         self.inputs.new(NodeSocket_Verts.bl_idname,name="verts")
         self.inputs.new(NodeSocket_Edges.bl_idname,name="edges")
         self.inputs.new(NodeSocket_Faces.bl_idname,name="faces")
+    # 必须连接vert
+    def is_prepared(self):
+        if not self.inputs[0].is_linked:
+            return False
+        return self.link_num == 0
 
 
 

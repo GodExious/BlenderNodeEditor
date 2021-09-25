@@ -38,6 +38,15 @@ node_categories = [
         nodeitems_utils.NodeItem('Node_MeshAppoint'),
 
     ]),
+    PearlNodeCategory("6","Modifier",items=[
+        nodeitems_utils.NodeItem('Node_getMesh'),
+        nodeitems_utils.NodeItem('Node_buildObject'),
+        nodeitems_utils.NodeItem('Node_linkObject'),
+        nodeitems_utils.NodeItem('Node_addModifier_Skin'),
+        nodeitems_utils.NodeItem('Node_addModifier_Subsurf'),
+
+
+    ]),
 ]
 
 

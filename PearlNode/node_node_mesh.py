@@ -121,12 +121,14 @@ class Node_MeshAppoint(PearlNode):
         bm.to_mesh(obj.data)
         bm.free()
         bpy.ops.object.select_all()
+        self.outputs[0].socket_value = self.node_value
 
      # 输入点边面数据
     def init(self, context):
         self.inputs.new(NodeSocket_Verts.bl_idname,name="verts")
         self.inputs.new(NodeSocket_Edges.bl_idname,name="edges")
         self.inputs.new(NodeSocket_Faces.bl_idname,name="faces")
+        self.outputs.new(NodeSocket_String.bl_idname,name='object')
     # 必须连接vert
     def is_prepared(self):
         if not self.inputs[0].is_linked:
@@ -172,6 +174,8 @@ class Node_Object2BMesh(PearlNode):
         self.outputs.new(NodeSocket_Edges.bl_idname,name="edges")
         self.outputs.new(NodeSocket_Faces.bl_idname,name="faces")
     
+class Node_BMesh2Object:
+    pass
 
 
 
@@ -184,6 +188,7 @@ classes = [
     Node_TransfromObject,
     Node_Object2BMesh,
     Node_MeshAppoint,
+
 
 
 ]

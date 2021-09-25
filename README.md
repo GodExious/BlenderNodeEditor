@@ -30,24 +30,38 @@ Will re-write to build model-editor
 ## TODO
 
 * 增加更多的节点
+
 * 建模系统、颜色系统
+
 * socket与节点内置值的联动
-* socket的缺省
+
+* socket的节点内值缺省
+
 * 更好的UI和交互
+
 * 节点的UI-update和process-Update
+
 * 优化socket_values的参数传递 与 key
+
 * 节点执行后数据结果的自动刷新问题
-* 将入度判断从socket数量的prepare_num改为input-link的num+必须连接的函数判断
+
+* 将入度判断从socket数量的prepare_num改为input-link的num+必须连接的函数判断，link_num为0时执行，会使得没有任何连接的节点执行，prepare函数能否保证不会出问题？检查（已更新，待检查）
+
 * 封装string2list与list2string
+
 * 封装init文件自动加载路径下模块（已完成）
+
 * 让process返回True/False，确定节点是否完成计算，以便决定是否执行transfer
-* link_num为0时执行，会使得没有任何连接的节点执行，prepare函数能否保证不会出问题？检查
+
+* 如何转递物体信息而不是像现在这样传递object-string，定义mesh用来赋值？要做到连接modifier节点则有相应的修改器，断开节点修改器也没有，或者一直储存一个隐式的object或者mesh，而且这个mesh的修改器不能一直叠加。。。。。反正需要思考很多
+
+  
 
 
 
 ## Large Change
 
-* 原来socket父类内置有被继承的socket_value，但是由于子类数据类型的变化，父类中的socket_value已经删除，所有的子类必须自己定义socket_value才能满足transfer 传递socket_value的需求(已弃用)
+* 原来socket父类内置有被继承的socket_value，但是由于子类数据类型的变化，父类中的socket_value已经删除，所有的子类必须自己定义socket_value才能满足transfer 传递socket_value的需求（已弃用）
 * 原来使用原生list类型用于存储bmesh的点边面数据，但是存在覆盖的问题无法解决，采用转换StringProperty代替
 
 

@@ -122,9 +122,18 @@ class NodeSocket_Faces(PearlNodeSocket):
         result = result[:-1]
         return result
 
+
+# TODO 目前的object和mesh都是储存名字string
 class NodeSocket_Object(PearlNodeSocket):
     bl_idname = 'NodeSocket_Object'
     bl_label = 'NodeSocket_Object'
+
+    socket_color = (0.8, 0.1, 0.5, 1)
+    socket_value : bpy.props.StringProperty(default='')
+
+class NodeSocket_Mesh(PearlNodeSocket):
+    bl_idname = 'NodeSocket_Mesh'
+    bl_label = 'NodeSocket_Mesh'
 
     socket_color = (0.8, 0.1, 0.5, 1)
     socket_value : bpy.props.StringProperty(default='')
@@ -161,6 +170,7 @@ classes = [
     NodeSocket_Edges,
     NodeSocket_Faces,
     NodeSocket_Object,
+    NodeSocket_Mesh,
     
 ]
 
